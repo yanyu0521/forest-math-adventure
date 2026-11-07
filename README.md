@@ -2,6 +2,8 @@
 
 Phaser.js browser game for elementary math practice.
 
+Play online: https://yanyu0521.github.io/forest-math-adventure/
+
 ## Start
 
 ```bash
