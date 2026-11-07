@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#214c36" />
+    <meta name="description" content="帶著小探險家走進森林，蒐集五關數學答案。" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=M+PLUS+Rounded+1c:wght@500;700;800;900&display=swap" rel="stylesheet" />
+    <title>森林數學大冒險</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="森林數學大冒險首頁">
+          <span class="brand-leaf" aria-hidden="true"></span>
+          <span class="brand-copy">
+            <strong>森林數學大冒險</strong>
+            <small>帶著好奇心，沿路找答案</small>
+          </span>
+        </a>
+
+        <nav class="level-track" aria-label="五關進度">
+          <span class="track-line" aria-hidden="true"></span>
+          <span class="track-step is-active" data-track="0" aria-label="第一關，加法"><i>加</i><small>加法</small></span>
+          <span class="track-step" data-track="1" aria-label="第二關，減法"><i>減</i><small>減法</small></span>
+          <span class="track-step" data-track="2" aria-label="第三關，乘法"><i>乘</i><small>乘法</small></span>
+          <span class="track-step" data-track="3" aria-label="第四關，除法"><i>除</i><small>除法</small></span>
+          <span class="track-step" data-track="4" aria-label="第五關，綜合"><i>綜</i><small>綜合</small></span>
+        </nav>
+
+        <div class="score-cluster">
+          <span class="score-label">松果分數</span>
+          <strong id="score">0</strong>
+        </div>
+        <button id="pause-game" class="pause-button" type="button" disabled>暫停</button>
+      </header>
+
+      <main class="game-layout">
+        <aside class="mission-panel" aria-labelledby="equation">
+          <div class="mission-meta">
+            <span id="level-name">第一關・加法小徑</span>
+            <span id="question-count">第 1 題 / 3</span>
+          </div>
+          <h1 id="equation">7 + 5 = ?</h1>
+          <p class="mission-copy">移動小探險家，碰觸正確的森林路標。</p>
+
+          <div class="round-progress" aria-label="本關答題進度">
+            <div class="round-progress-label"><span>本關旅程</span><span id="round-progress-text">0 / 3</span></div>
+            <div class="round-progress-track"><span id="round-progress-fill"></span></div>
+          </div>
+
+          <p id="feedback" class="feedback" role="status" aria-live="polite">答對得 10 分，答錯扣 5 分。準備好就出發！</p>
+          <div class="action-row">
+            <button id="start-game" class="start-button" type="button">開始冒險 <span class="icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7" /></svg></span></button>
+          </div>
+          <p class="keyboard-hint"><kbd>方向鍵</kbd> 或 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 移動角色</p>
+        </aside>
+
+        <section class="forest-world" aria-label="森林闖關遊戲區">
+          <div id="game-canvas" class="game-canvas" aria-hidden="true"></div>
+          <span class="answer-label" data-answer="0" aria-hidden="true">—</span>
+          <span class="answer-label" data-answer="1" aria-hidden="true">—</span>
+          <span class="answer-label" data-answer="2" aria-hidden="true">—</span>
+          <div class="world-label"><span class="world-label-dot"></span><span>林間尋答路線</span></div>
+          <div class="world-hint" id="world-hint">碰觸正確的路標來蒐集答案</div>
+
+          <div class="touch-pad" role="group" aria-label="角色方向控制">
+            <button type="button" class="move-button move-up" data-direction="up" aria-label="向上移動"><svg class="move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7" /></svg></button>
+            <button type="button" class="move-button move-left" data-direction="left" aria-label="向左移動"><svg class="move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7" /></svg></button>
+            <button type="button" class="move-button move-down" data-direction="down" aria-label="向下移動"><svg class="move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7" /></svg></button>
+            <button type="button" class="move-button move-right" data-direction="right" aria-label="向右移動"><svg class="move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7" /></svg></button>
+          </div>
+
+          <div id="pause-overlay" class="game-overlay" hidden>
+            <div class="overlay-content">
+              <h2>休息一下吧</h2>
+              <p>森林會等你回來。</p>
+              <button id="resume-game" class="start-button" type="button">繼續闖關</button>
+            </div>
+          </div>
+
+          <div id="result-overlay" class="game-overlay" hidden>
+            <div class="overlay-content result-content">
+              <h2 id="result-title">森林守護者</h2>
+              <p id="result-copy">你完成了五段數學旅程。</p>
+              <div class="final-score"><span>最後得分</span><strong id="final-score">0</strong></div>
+              <button id="play-again" class="start-button" type="button">再冒險一次</button>
+            </div>
+          </div>
+
+          <ul id="answer-list" class="visually-hidden" aria-label="目前可收集的答案"></ul>
+        </section>
+      </main>
+      <p id="live-status" class="visually-hidden" aria-live="polite"></p>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
